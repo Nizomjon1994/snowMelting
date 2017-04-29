@@ -1,0 +1,117 @@
+/* Get rid of default padding and margin! */
+*{
+	margin:0px;
+	padding:0px;
+	list-style-type:none;
+}
+
+header,nav,article,section,footer{
+	display:block;
+}
+
+/* Centering website */
+.container{
+	width:100%;
+	margin: 0px auto;
+}
+
+/* Clear */
+.clear{
+	clear:both;
+}
+
+/*Header page*/
+.page_header{
+	width:100%;
+	margin:0px auto;
+}
+
+/* Logo */
+.logo{
+    width: 20%;
+	float:left;
+}
+
+/*top-nav*/
+.top_nav{
+	float:left;
+	width:76.8%;
+}
+
+.top_nav ul li{
+	float:left;
+	padding: 35px 20px;
+}
+
+/*Float aside and main section*/
+
+/*Left-side*/
+.left_side{
+	float:left;
+	width:70%;
+}
+
+.left_side article{
+	border:2px solid #ff1f2b;
+	margin-right:10px;
+	padding:10px;
+}
+
+/*Right-side*/
+.right_side{
+	float:left;
+	width:30%;
+}
+
+.right_side div{
+	border:2px solid #0000ff;
+	margin:0px 0px 10px 0px; /*top left bottom right*/
+	padding:10px;
+}
+
+/*Page footer*/
+.page_footer{
+	clear:both;
+	text-align: center;
+}
+
+@media screen and (max-width:999px){
+	.container{
+		width:99%;
+	}
+	.logo{
+		width:10%
+	}
+	.top_nav{
+		width:70%;
+	}
+	.left_side{
+		width:69%;
+	}
+	.right_side{
+		width:30%;
+	}
+	.page_footer{
+		width:99%;
+	}
+}
+@media screen and (max-width:640px){
+	.left_side{
+		width:100%;
+	}
+	.right_side{
+		width:100%;
+	}
+	.logo{
+		width:5%;
+	}
+	.top_nav{
+		width:100%;
+	}
+}
+@media screen and (max-width:320px){
+	.container{
+		width:320px;
+	}
+
+}

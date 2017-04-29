@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css"/>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+<head>
+    <title>bootstrap datepicker examples</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/graph.js') }}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+    <div class="row" style="margin: auto">
+
+        <form method="POST" role="form">
+            <div>
+                <label>Start Time</label>
+                <input class="form-control" name="start_time" id="start_time" placeholder="DD/MM/YY" type="date">
+                <label>Finish Time</label>
+                <input class="form-control" name="finish_time" id="finish_time" placeholder="DD/MM/YY" type="date">
+                <input id="submit_date" type="button" value="Button">
+            </div>
+        </form>
+    </div>
+
+    <div style="float: left">
+
+        <h2>Temperatures</h2>
+        <table cellspacing="15">
+            <thead style="display:block;">
+            <tr>
+                <th>Date</th>
+                <th>                              &deg;F</th>
+            </tr>
+            </thead>
+            <tbody style="height:450px;  overflow:scroll; display:block; margin: 10px">
+            {% for row in weather_list %}
+                <tr>
+                    <td>{{ row.date }}</td>
+                    <td>{{ '%0.2f'|format(row.temp) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h2>Humidities</h2>
+        <table class="u-full-width" cellspacing="15">
+            <thead style="display:block;">
+            <tr>
+                <th>Date</th>
+                <th>                              %</th>
+            </tr>
+            </thead>
+            <tbody style="height:450px; overflow:scroll; display:block; margin: 10px">
+            {% for row in weather_list %}
+                <tr>
+                    <td>{{ row.date }}</td>
+                    <td></td>
+                    <td>{{ '%0.2f'|format(row.hum) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="two columns" style="float: left">
+        <div id="chart_temps"></div>
+        <div id="chart_humid"></div>
+    </div>
+
+
+</div>
+
+
+</div>
+
+</body>
+
+
+<script type="text/javascript"
+        src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('datetime', 'Time');
+        data.addColumn('number', 'Temperature');
+        data.addRows([
+            {% for row in weather_list %}
+                [new Date({{row.date[0:4]}}, {{row.date[5:7]}}-1, {{row.date[8:10]}}, {{row.date[11:13]}}, {{row.date[14:16]}}), {{'%0.2f'|format(row.temp)}}],
+            {% endfor %}
+        ]);
+
+        var options = {
+            width: 600,
+            height: 563,
+            hAxis: {
+                title: "Date",
+                gridlines: {count: {{ list_count }}, color: '#CCC'},
+                format: 'dd-MMM-yyyy HH:mm'
+            },
+            vAxis: {
+                title: 'Degrees'
+            },
+            title: 'Temperature',
+            curveType: 'function'  //Makes line curved
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_temps'));
+
+        chart.draw(data, options);
+
+    }
+
+</script>
+
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('datetime', 'Time');
+        data.addColumn('number', 'Humidity');
+        data.addRows([
+            {% for row in weather_list %}
+                [new Date({{row.date[0:4]}}, {{row.date[5:7]}}-1, {{row.date[8:10]}}, {{row.date[11:13]}}, {{row.date[14:16]}}), {{'%0.2f'|format(row.hum)}}],
+            {% endfor %}
+        ]);
+
+        var options = {
+            width: 600,
+            height: 563,
+            hAxis: {
+                title: "Date",
+                gridlines: {count: {{ list_count }}, color: '#CCC'},
+                format: 'dd-MMM-yyyy HH:mm'
+            },
+            vAxis: {
+                title: 'Percent'
+            },
+            title: 'Humidity',
+            curveType: 'function'  //Makes line curved
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_humid'));
+
+        chart.draw(data, options);
+
+    }
+
+</script>
+
+</html>

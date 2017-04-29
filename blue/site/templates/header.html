@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- Website Template by freewebsitetemplates.com -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Station</title>
+    <script src="{{ url_for('static',filename='bower_components/angular/angular.js') }}"></script>
+    <link href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}"
+          rel="stylesheet">
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>#}
+    {#    <script type="text/javascript" src="{{ url_for('static',filename='js/mqtt.js') }}"></script>#}
+</head>
+<header>
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/">
+
+        </a>
+    </div>
+
+    <div class="container-fluid">
+
+
+        <ul class="nav navbar-nav navbar-right">
+            <div style="margin-right: 10px; margin-left: 15px; margin-top: 5px; margin-bottom: 5px;"
+                 class="container-fluid">
+
+                <h5>
+                    {% if session.logged_in %}
+                        <a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout </a>
+
+
+                    {% endif %}
+
+                </h5>
+            </div>
+        </ul>
+
+        </ul>
+        </ul>
+    </div>
+
+
+</header>
+<body>
+
+<div class="border_now" style="width: 100% ; margin-bottom: 15px"></div>
+
+    {% block body %}
+
+
+    {% endblock %}
+
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="{{ url_for('static',filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+</body>
+
+</html>
