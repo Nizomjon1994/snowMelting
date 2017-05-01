@@ -1,4 +1,6 @@
 import gc
+
+import cx_Oracle as cx_Oracle
 from flask import Blueprint
 from flask import Flask, render_template, jsonify, request, url_for, Response
 from flask import flash
@@ -14,6 +16,15 @@ mod = Blueprint('site', __name__, template_folder='templates')
 
 @mod.route('/home')
 def home():
+    SQL = "SELECT * FROM SOME_TABLE"
+    connection = cx_Oracle.connect('scott/tiger@210.119.146.56:1521/orcl')
+    cursor = connection.cursor()
+    cursor.execute(SQL)
+    for row in cursor:
+        print(row
+              )
+    cursor.close()
+    connection.close()
     return "<h1>You are on the home</h1>"
 
 
